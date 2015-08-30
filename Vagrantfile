@@ -57,7 +57,7 @@ Vagrant.configure("2") do |config|
   config.vm.provider :vmware_fusion do |v, override|
     override.vm.box = "netsensia/ubuntu-trusty64"
   end
-  
+
   # VMWare Workstation can use the same package as Fusion
   config.vm.provider :vmware_workstation do |v, override|
     override.vm.box = "netsensia/ubuntu-trusty64"
@@ -142,11 +142,6 @@ Vagrant.configure("2") do |config|
     config.vm.synced_folder "www/", "/srv/www/", :owner => "www-data", :mount_options => [ "dmode=775", "fmode=774" ]
   else
     config.vm.synced_folder "www/", "/srv/www/", :owner => "www-data", :extra => 'dmode=775,fmode=774'
-  end
-
-  config.vm.provision "fix-no-tty", type: "shell" do |s|
-    s.privileged = false
-    s.inline = "sudo sed -i '/tty/!s/mesg n/tty -s \\&\\& mesg n/' /root/.profile"
   end
 
   # The Parallels Provider does not understand "dmode"/"fmode" in the "mount_options" as
